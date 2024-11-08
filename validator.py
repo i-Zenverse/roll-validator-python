@@ -35,16 +35,27 @@ def calculate_public_hash(secret: str, salt: str) -> str:
     """
     return hashlib.sha256(f"{secret}{salt}".encode()).hexdigest()
 
-# 测试代码
-server_seed = "b1e09ba4298225e04682e44a0f95c1ad"
-client_seed = "0x4babc432f015985c0c6f42177082fb4a6926436f"
-nonce = 2
-salt = "dc8b74025d9933e964453ed34acb4225"
+# # 测试代码
+# server_seed = "b1e09ba4298225e04682e44a0f95c1ad"
+# client_seed = "0x4babc432f015985c0c6f42177082fb4a6926436f"
+# nonce = 2
+# salt = "dc8b74025d9933e964453ed34acb4225"
+
+result = {
+    "server_seed":"819e9c8b09b28f9875d7a14bce2161bf",
+    "secret_salt":"8f0381b8cbbfe822ef56e6044d9c5912",
+    "public_hash":"37095a43325c6b084911b7a45bbc7ff28f0b53e78191d260b6895e694a86d7a9",
+    "client_seed":"0x4babc432f015985c0c6f42177082fb4a6926436f",
+    "nonce":71,
+    "roll":78011
+}
 
 # 生成的随机数
-generated_roll = generate_roll(server_seed, client_seed, nonce)
-print("Generated roll:", generated_roll)
+generated_roll = generate_roll(result.get("server_seed"), result.get("client_seed"), result.get("nonce"))
+print("掷骰结果:", generated_roll)
+print("掷骰结果是否匹配: ", generated_roll == result.get("roll"))
 
 # 计算公钥哈希
-public_hash = calculate_public_hash(server_seed, salt)
-print("Calculated Public Hash:", public_hash)
+public_hash = calculate_public_hash(result.get("server_seed"), result.get("secret_salt"))
+print("计算公共hash:", public_hash)
+print("公共hash是否匹配: ", public_hash == result.get("public_hash"))
